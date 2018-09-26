@@ -1,10 +1,27 @@
+#*- coding:UTF-8 -*-
+"""
+##  ==========================================================================
+##
+##       author : Liang He, heliang@mail.tsinghua.edu.cn
+##                
+##   descrption : mce18, lplda
+##                This script is based on
+##                MCE18 offical released script (cosine scoring).
+##      created : 20180923
+## last revised : 
+##
+##    Liang He, +86-13426228839, heliang@mail.tsinghua.edu.cn
+##    Aurora Lab, Department of Electronic Engineering, Tsinghua University
+##  ==========================================================================
+"""
+
 import numpy as np
 from sklearn.metrics import roc_curve
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 import LPLDA
 
 def load_ivector(filename):
-    utt = np.loadtxt(filename,dtype='string',delimiter=',',skiprows=1,usecols=[0])
+    utt = np.loadtxt(filename,dtype='str',delimiter=',',skiprows=1,usecols=[0])
     ivector = np.loadtxt(filename,dtype='float32',delimiter=',',skiprows=1,usecols=range(1,601))
     spk_id = []
     for iter in range(len(utt)):
@@ -56,7 +73,7 @@ def calculate_EER(trials, scores):
     EER_fnr = fnr[np.argmin(np.absolute((fnr-fpr)))]
     EER = 0.5 * (EER_fpr+EER_fnr)
     
-    print "Top S detector EER is %0.2f%%"% (EER*100)
+    print ("Top S detector EER is %0.2f%%"% (EER*100))
     return EER
 
 def get_trials_label_with_confusion(identified_label, groundtruth_label,dict4spk,is_trial ):
@@ -112,11 +129,11 @@ def calculate_EER_with_confusion(scores,trials):
     EER_fnr = fnr[np.argmin(np.absolute((fnr-fpr)))]
     EER = 0.5 * (EER_fpr+EER_fnr)
     
-    print "Top 1 detector EER is %0.2f%% (Total confusion error is %d)"% ((EER*100), len(np.nonzero(trials==-1)[0]))
+    print ("Top 1 detector EER is %0.2f%% (Total confusion error is %d)"% ((EER*100), len(np.nonzero(trials==-1)[0])))
     return EER
 
 ## making dictionary to find blacklist pair between train and test dataset
-bl_match = np.loadtxt('data/bl_matching_dev.csv',dtype='string')
+bl_match = np.loadtxt('../data/bl_matching_dev.csv',dtype='str')
 dev2train={}
 dev2id={}
 train2dev={}
@@ -130,11 +147,11 @@ for iter, line in enumerate(bl_match):
     train2id[line_s[2].split('_')[-1]]= line_s[0].split('_')[-1]
     
 # Loading i-vector
-trn_bl_id, trn_bl_utt, trn_bl_ivector = load_ivector('data/trn_blacklist.csv')
-trn_bg_id, trn_bg_utt, trn_bg_ivector = load_ivector('data/trn_background.csv')
-dev_bl_id, dev_bl_utt, dev_bl_ivector = load_ivector('data/dev_blacklist.csv')
-dev_bg_id, dev_bg_utt, dev_bg_ivector = load_ivector('data/dev_background.csv')
-test_id,   test_utt,   test_ivector   = load_ivector('data/tst_evaluation.csv')
+trn_bl_id, trn_bl_utt, trn_bl_ivector = load_ivector('../data/trn_blacklist.csv')
+trn_bg_id, trn_bg_utt, trn_bg_ivector = load_ivector('../data/trn_background.csv')
+dev_bl_id, dev_bl_utt, dev_bl_ivector = load_ivector('../data/dev_blacklist.csv')
+dev_bg_id, dev_bg_utt, dev_bg_ivector = load_ivector('../data/dev_background.csv')
+test_id,   test_utt,   test_ivector   = load_ivector('../data/tst_evaluation.csv')
 
 # Calculating speaker mean vector
 spk_mean, spk_mean_label = make_spkvec(trn_bl_ivector, trn_bl_id)
@@ -146,7 +163,7 @@ dev_bl_ivector = length_norm(dev_bl_ivector)
 dev_bg_ivector = length_norm(dev_bg_ivector)
 test_ivector   = length_norm(test_ivector)
 
-print 'Dev set score using train set :'
+print ('Dev set score using train set :')
 
 # making trials of Dev set
 dev_ivector = np.append(dev_bl_ivector, dev_bg_ivector,axis=0)
@@ -155,8 +172,8 @@ dev_trials = np.append( np.ones([len(dev_bl_id), 1]), np.zeros([len(dev_bg_id), 
 ## lda
 lda_ivector = np.vstack((np.asarray(trn_bl_ivector),np.asarray(trn_bg_ivector)))
 lda_label = np.concatenate((np.asarray(trn_bl_id),np.asarray(trn_bg_id)),axis=0)
-# lda = LinearDiscriminantAnalysis(n_components=500)
-lda = LPLDA.LocalPairwiseLinearDiscriminantAnalysis(n_components=500)
+lda = LinearDiscriminantAnalysis(n_components=500)
+# lda = LPLDA.LocalPairwiseLinearDiscriminantAnalysis(n_components=500)
 lda.fit(lda_ivector, lda_label)
 
 spk_mean = lda.transform(np.asarray(spk_mean))
