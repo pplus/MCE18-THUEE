@@ -4,6 +4,7 @@
 THUEE system for The 1st Multi-target speaker detection and identification Challenge Evaluation \
 http://www.mce2018.org/ 
 
+environment : anaconda3, python3, require sklearn.
 
 1. prepare data, make directory ./data and ./temp \
 put MCE18 offical uncompressed data on "./data/", \
