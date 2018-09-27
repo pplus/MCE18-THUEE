@@ -39,8 +39,8 @@ The script will read "./temp/mce18.mat", and it will generate "./temp/mce18_resu
 C1. run ./python/mce18_plda_eval.py \
 The script will read "./temp/mce18.mat", and the results are \
 Dev set score using train set : \
-Top S detector EER is 3.44% \
-Top 1 detector EER is 9.88% (Total confusion error is 347)
+Top S detector EER is 2.77% \
+Top 1 detector EER is 9.04% (Total confusion error is 322)
 
 
 Option 2:
@@ -50,8 +50,8 @@ The script will read "./temp/mce18.mat", and it will also generate "./temp/mce18
 C2. run ./python/mce18_plda_eval.py \
 The script will read "./temp/mce18.mat", and the results are \
 Dev set score using train set : \
-Top S detector EER is 2.76% \
-Top 1 detector EER is 9.20% (Total confusion error is 325)
+Top S detector EER is 3.83% \
+Top 1 detector EER is 7.50% (Total confusion error is 255)
 
 
 
