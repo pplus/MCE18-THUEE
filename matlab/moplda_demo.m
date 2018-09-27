@@ -26,14 +26,16 @@ load '../temp/mce18.mat';
     
 nphi = 500; % dimension
 niter = 50; % iteration
-wb_fac = 5.0; % factor
+wb_fac = 1.7; % factor
 
 %% train plda
 plda = moplda_em_update_sigma(wb_fac, dev_ivec', dev_label, dev_ivec_neighbor', dev_label_neighbor, nphi, niter);
 
 %% score plda
 score = score_moplda_trials(plda, enrol_ivec', test_ivec');
-save('../temp/mce18_result.mat','score');
+norm_score = score_moplda_trials(plda, enrol_ivec', norm_ivec');
+
+save('../temp/mce18_result.mat','score','norm_score');
 
 % end
 % end

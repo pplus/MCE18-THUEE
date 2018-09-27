@@ -48,5 +48,8 @@ plda = gplda_em(double(dev_ivec'), dev_label, nphi, niter);
 
 %% score plda
 score = score_gplda_trials(plda, enrol_ivec', test_ivec');
-save('../temp/mce18_result.mat','score');
+norm_score = score_gplda_trials(plda, enrol_ivec', norm_ivec');
+
+
+save('../temp/mce18_result.mat','score','norm_score');
 % end

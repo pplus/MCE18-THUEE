@@ -1,0 +1,57 @@
+
+
+Baseline == 
+Top S detector EER is 2.01%
+Top 1 detector EER is 12.26% (Total confusion error is 444)
+
+LDA 500
+Dev set score using train set :
+Top S detector EER is 2.76%
+Top 1 detector EER is 9.20% (Total confusion error is 325)
+
+LDA 400
+Dev set score using train set :
+Top S detector EER is 2.85%
+Top 1 detector EER is 9.22% (Total confusion error is 330
+
+LDA 300
+Dev set score using train set :
+Top S detector EER is 2.92%
+Top 1 detector EER is 9.18% (Total confusion error is 321)
+
+LDA 200
+Dev set score using train set : 
+Top S detector EER is 2.90%
+Top 1 detector EER is 9.66% (Total confusion error is 345)
+
+LDA 100
+Dev set score using train set :
+Top S detector EER is 3.20%
+Top 1 detector EER is 13.22% (Total confusion error is 477)
+
+LPLDA 200
+Dev set score using train set :
+Top S detector EER is 2.48%
+Top 1 detector EER is 8.12% (Total confusion error is 291)
+
+LPLDA 500
+Dev set score using train set :
+Top S detector EER is 2.41%
+Top 1 detector EER is 8.10% (Total confusion error is 291)
+
+LDA 500, GPLDA 500, 
+Dev set score using train set :
+Top S detector EER is 2.77%
+Top 1 detector EER is 9.04% (Total confusion error is 322)
+
+LDA 500, GPLDA 500, wb = 5
+Dev set score using train set :
+Top S detector EER is 2.86%
+Top 1 detector EER is 8.64% (Total confusion error is 304)
+
+LDA 500, GPLDA 500, wb = 1.7
+Dev set score using train set :
+Top S detector EER is 3.83%
+Top 1 detector EER is 7.50% (Total confusion error is 255)
+
+

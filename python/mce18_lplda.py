@@ -172,8 +172,8 @@ dev_trials = np.append( np.ones([len(dev_bl_id), 1]), np.zeros([len(dev_bg_id), 
 ## lda
 lda_ivector = np.vstack((np.asarray(trn_bl_ivector),np.asarray(trn_bg_ivector)))
 lda_label = np.concatenate((np.asarray(trn_bl_id),np.asarray(trn_bg_id)),axis=0)
-lda = LinearDiscriminantAnalysis(n_components=500)
-# lda = LPLDA.LocalPairwiseLinearDiscriminantAnalysis(n_components=500)
+# lda = LinearDiscriminantAnalysis(n_components=500)
+lda = LPLDA.LocalPairwiseLinearDiscriminantAnalysis(n_components=500)
 lda.fit(lda_ivector, lda_label)
 
 spk_mean = lda.transform(np.asarray(spk_mean))

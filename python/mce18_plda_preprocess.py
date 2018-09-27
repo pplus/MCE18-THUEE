@@ -4,7 +4,7 @@
 ##
 ##       author : Liang He, heliang@mail.tsinghua.edu.cn
 ##                
-##   descrption : mce18, lda + plda
+##   descrption : mce18, lda + plda, propresss
 ##                This script is based on
 ##                MCE18 offical released script (cosine scoring).
 ##      created : 20180923
@@ -284,67 +284,13 @@ trn_bl_ivector = length_norm(trn_bl_ivector)
 
 # save for matlab
 lda_id = label_str_to_int(lda_label)
-#scipy.io.savemat('../temp/mce18.mat', 
-#                 mdict={'dev_ivec':lda_ivector, 
-#                        'dev_label':lda_id, 
-#                        'enrol_ivec':spk_mean,
-#                        'test_ivec':dev_ivector})
 dev_ivec_neighbor, dev_ivec_label = compute_neighbor(lda_ivector, lda_id)
 scipy.io.savemat('../temp/mce18.mat', 
                  mdict={'dev_ivec':lda_ivector, 
                         'dev_label':lda_id, 
+                        'norm_ivec':trn_bl_ivector,
                         'dev_ivec_neighbor':dev_ivec_neighbor, 
                         'dev_label_neighbor':dev_ivec_label, 
                         'enrol_ivec':spk_mean,
                         'test_ivec':dev_ivector})
 
-#
-## Cosine distance scoring
-#scores = spk_mean.dot(dev_ivector.transpose())
-#test_scores = spk_mean.dot(test_ivector.transpose())
-#
-## Multi-target normalization
-#blscores = spk_mean.dot(trn_bl_ivector.transpose())
-#mnorm_mu = np.mean(blscores,axis=1)
-#mnorm_std = np.std(blscores,axis=1)
-#
-#for iter in range(np.shape(scores)[1]):
-#    scores[:,iter]= (scores[:,iter] - mnorm_mu) / mnorm_std
-#dev_scores = np.max(scores,axis=0)
-#
-#for iter in range(np.shape(test_scores)[1]):
-#    test_scores[:,iter]= (test_scores[:,iter] - mnorm_mu) / mnorm_std
-#test_scores_normed = np.max(test_scores,axis=0)
-#
-## Top-S detector EER
-#dev_EER = calculate_EER(dev_trials, dev_scores)
-#
-## divide trial label into target and non-target, plus confusion error(blacklist, fail at blacklist detector)
-#dev_identified_label = spk_mean_label[np.argmax(scores,axis=0)]
-#dev_trials_label = np.append( dev_bl_id,dev_bg_id)
-#dev_trials_utt_label = np.append( dev_bl_utt,dev_bg_utt)
-#
-## Top-1 detector EER
-#dev_trials_confusion = get_trials_label_with_confusion(dev_identified_label, dev_trials_label, dev2train, dev_trials )
-#dev_EER_confusion = calculate_EER_with_confusion(dev_scores,dev_trials_confusion)
-#
-## submission file on Dev set
-#filename = 'THUEE_dev_fixed_primary.csv'
-## filename = 'teamname_fixed_contrastive1.csv'
-#with open(filename, "w") as text_file:
-#    for iter,score in enumerate(dev_scores):
-#        id_in_trainset = dev_identified_label[iter].split('_')[0]
-#        input_file = dev_trials_utt_label[iter]
-#        text_file.write('%s,%s,%s\n' % (input_file,score,train2id[id_in_trainset]))
-#
-## submission file on Eval set
-#test_identified_label = spk_mean_label[np.argmax(test_scores,axis=0)]
-#test_trials_label = test_id
-#test_trials_utt_label = test_utt
-#
-#filename = 'THUEE_fixed_primary.csv'
-#with open(filename, "w") as text_file:
-#    for iter,score in enumerate(test_scores_normed):
-#        id_in_trainset = test_identified_label[iter].split('_')[0]
-#        input_file = test_trials_utt_label[iter]
-#        text_file.write('%s,%s,%s\n' % (input_file,score,train2id[id_in_trainset]))
